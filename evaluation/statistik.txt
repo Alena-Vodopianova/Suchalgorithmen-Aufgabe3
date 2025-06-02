@@ -1,0 +1,20 @@
+===== Array Size: 100 =====
+Linear Search -> Min: 200 ns | Max: 1158900 ns | Average: 12689,00 ns
+Binary Search -> Min: 100 ns | Max: 2800 ns | Average: 280,00 ns
+Interpolation Search -> Min: 100 ns | Max: 2400 ns | Average: 197,00 ns
+QuadraticBinary Search -> Min: 100 ns | Max: 2100 ns | Average: 327,00 ns
+
+===== Array Size: 1000 =====
+Linear Search -> Min: 200 ns | Max: 46000 ns | Average: 1635,20 ns
+Binary Search -> Min: 100 ns | Max: 8900 ns | Average: 360,30 ns
+Interpolation Search -> Min: 100 ns | Max: 9100 ns | Average: 193,80 ns
+QuadraticBinary Search -> Min: 100 ns | Max: 37500 ns | Average: 428,90 ns
+
+===== Array Size: 10000 =====
+Linear Search -> Min: 100 ns | Max: 736200 ns | Average: 1933,62 ns
+Binary Search -> Min: 100 ns | Max: 34600 ns | Average: 179,66 ns
+Interpolation Search -> Min: 100 ns | Max: 39700 ns | Average: 124,37 ns
+QuadraticBinary Search -> Min: 100 ns | Max: 44200 ns | Average: 190,51 ns
+
+===== Array Size: 100000 =====
+Linear Search -> Min: 100 ns | Max: 277010
