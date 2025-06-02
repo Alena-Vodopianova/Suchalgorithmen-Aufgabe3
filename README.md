@@ -51,6 +51,3 @@ QuadraticBinary Search -> Min: 100 ns | Max: 44400 ns | Average: 275,39 ns
 - Die binäre Suche ist effizient und konstant schnell.
 - Interpolationssuche war besonders schnell bei gleichmäßig verteilten Daten.
 - Quadratische binäre Suche ist ebenfalls effizient, jedoch leicht langsamer als Interpolation.
-
-## Hinweis zur Abgabe
-Dieser Text kann als Grundlage für das PDF-Dokument "Statistische Auswertung" dienen. Bitte in Word einfügen und als `.pdf` speichern.
