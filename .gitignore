@@ -1,5 +1,9 @@
 target/
-evaluation/
+evaluation/*.txt
+
 .vscode/
 
 *.class
+
+!evaluation/
+!evaluation/*.pdf
