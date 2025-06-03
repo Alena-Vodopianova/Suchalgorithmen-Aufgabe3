@@ -83,40 +83,61 @@ public class SearchAlgorithms {
     }
 
     /**
-     * Performs quadratic binary search by dividing the array into three parts.
-     * @param a Sorted integer array to search in.
-     * @param x Target value to find.
-     * @return Index of x if found, -1 otherwise.
-     */
-    public static int quadraticBinarySearch(int[] a, int x) {
-        if (a == null || a.length == 0) { 
-            return -1;
-            }
-        int low = 0, high = a.length - 1;
-        while (low <= high) {
-            int third = (high - low) / 3;
-            int mid1 = low + third;
-            int mid2 = high - third;
-            if (mid1 >= a.length || mid2 >= a.length) { 
-                return -1;
-            }
-            if (a[mid1] == x) {
-                    return mid1;
-            }
-            if (a[mid2] == x) {
-                return mid2;
-            }
-            if (x < a[mid1]) {
-                high = mid1 - 1;
-                }
-            else if (x > a[mid2]) {
-                low = mid2 + 1;
-                }
-            else {
-                low = mid1 + 1;
-                high = mid2 - 1;
-            }
+ * Performs quadratic binary search using interpolation and square-root stepping.
+ * First estimates the likely position with interpolation, then jumps in sqrt(n) steps
+ * to find the subrange, and finally uses binary search in that subrange.
+ *
+ * @param a Sorted integer array to search in.
+ * @param x Target value to find.
+ * @return Index of x if found, -1 otherwise.
+ */
+public static int quadraticBinarySearch(int[] a, int x) {
+    if (a == null || a.length == 0) return -1;
+
+    int n = a.length;
+    int low = 0, high = n - 1;
+
+    // While value is within search range
+    while (low <= high && x >= a[low] && x <= a[high]) {
+        // Avoid division by zero
+        if (a[high] == a[low]) {
+            if (a[low] == x) return low;
+            else return -1;
         }
-        return -1;
+
+        // Step 1: Estimate position using interpolation formula
+        int t = low + ((x - a[low]) * (high - low)) / (a[high] - a[low]);
+
+        if (t < 0 || t >= n) return -1;
+
+        if (a[t] == x) return t;
+
+        // Step 2: Jump in sqrt(n) steps to find search subrange
+        int step = (int) Math.sqrt(n);
+        int i = t;
+
+        if (a[t] < x) {
+            while (i < n && a[i] < x) {
+                i += step;
+            }
+            low = Math.max(t, i - step);
+            high = Math.min(i, n - 1);
+        } else {
+            while (i >= 0 && a[i] > x) {
+                i -= step;
+            }
+            high = Math.min(t, i + step);
+            low = Math.max(i, 0);
+        }
     }
+
+    // Final binary search in narrowed subrange
+    while (low <= high) {
+        int mid = (low + high) / 2;
+        if (a[mid] == x) return mid;
+        else if (a[mid] < x) low = mid + 1;
+        else high = mid - 1;
+    }
+
+    return -1;
 }
