@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
 /**
  * Main class to evaluate and compare search algorithms.
@@ -13,7 +12,6 @@ public class App {
     public static void main(String[] args) {
         int[] sizes = {100, 1000, 10000, 100000};
         String[] methods = {"Linear", "Binary", "Interpolation", "QuadraticBinary"};
-        Random rand = new Random();
 
         try (PrintWriter writer = new PrintWriter(new FileWriter("evaluation/statistik.txt"))) {
             for (int size : sizes) {
@@ -50,9 +48,13 @@ public class App {
                         if (duration > maxTime) maxTime = duration;
                     }
 
-                    double avgTime = totalTime / (double) size;
-                    writer.printf("%s Search -> Min: %d ns | Max: %d ns | Average: %.2f ns%n",
-                            method, minTime, maxTime, avgTime);
+                    // Convert time from nanoseconds to milliseconds
+                    double avgTimeMs = totalTime / (double) size / 1_000_000.0;
+                    double minTimeMs = minTime / 1_000_000.0;
+                    double maxTimeMs = maxTime / 1_000_000.0;
+
+                    writer.printf("%s Search -> Min: %.3f ms | Max: %.3f ms | Average: %.3f ms%n",
+                            method, minTimeMs, maxTimeMs, avgTimeMs);
                 }
 
                 writer.println();
@@ -65,10 +67,13 @@ public class App {
     }
 
     /**
-     * Generates a sorted array with unique integers from 1 to maxValue.
-     * @param size Size of the array.
-     * @param maxValue Maximum value of elements.
-     * @return Sorted integer array.
+     * This method creates a sorted array with unique values from 1 to maxValue.
+     * First, the values are randomly shuffled, then sorted.
+     * This simulates realistic data input.
+     *
+     * @param size Number of elements in the array.
+     * @param maxValue Maximum possible value (should be >= size).
+     * @return A sorted integer array.
      */
     public static int[] generateSortedArray(int size, int maxValue) {
         if (size > maxValue || size <= 0)
@@ -79,13 +84,14 @@ public class App {
             array[i] = i + 1; // Fill array with values from 1 to size
         }
 
-        Collections.shuffle(Arrays.asList(array)); // Shuffle the array
+        Collections.shuffle(Arrays.asList(array)); // Random order
+
         int[] result = new int[size];
         for (int i = 0; i < size; i++) {
             result[i] = array[i];
         }
 
-        Arrays.sort(result); // Sort the array before searching
+        Arrays.sort(result); // Sort the array for searching
         return result;
     }
 }
